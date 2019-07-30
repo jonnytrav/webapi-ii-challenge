@@ -36,7 +36,7 @@ router.get("/:id", (request, response) => {
 
 router.get("/:id/comments", (request, response) => {
   const { id } = request.params;
-  db.findCommentById(id)
+  db.findPostComments(id)
     .then(res => {
       response.status(200).json({ success: true, res });
     })
