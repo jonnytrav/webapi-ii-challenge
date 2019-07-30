@@ -58,23 +58,16 @@ router.post("/", (request, response) => {
 
 router.post("/:id/comments", (request, response) => {
   //returns id of inserted comment
-  const post_id = request.params.id;
-  const { newComment } = request.body;
-
-  if (post_id) {
-    db.insertComment({ newComment, post_id })
-      .then(commentId => {
-        response.status(201).json({ success: true, commentId });
-      })
-      .catch(err => {
-        response.status(500).json({ success: false, err });
-      });
-  } else {
-    response.status(404).json({
-      success: false,
-      message: "There are no valid posts with that ID."
+  const commentText = request.body;
+  // const commentId = request.params.id;
+  const { id } = request.params;
+  db.insertComment(commentText)
+    .then(newCommentId => {
+      response.status(201).json({ success: true, newCommentId });
+    })
+    .catch(err => {
+      response.status(500).json({ success: false, err });
     });
-  }
 });
 
 router.put("/:id", (request, response) => {
